@@ -11,7 +11,9 @@ Or run it in dev mode with ```npm run dev```
 Or run it in debug mode with ```npm run debug```
 
 # Coding
-As for coding, we are using ESLint to analyze the Javascript code. Before commiting, please run ```npm 
+This project is using ESLint to maintain code quality by enforcing coding standards including style violations and errors.
+This also helps for future maintainability and readability. 
+Run ESLint with the command ```npm run lint```
 
 # Formatting JSON
-We can use the command ```curl -s localhost:8080 | jq``` to have formatted JSON.
+We can use the command ```curl -s localhost:8080 | jq``` to have formatted JSON. How this works is that it sends an HTTP request to our server and retrieves JSON data and we use the pipe to jq to make it more human-readable.
