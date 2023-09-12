@@ -5,6 +5,7 @@ const compression = require('compression');
 const passport = require('passport');
 const authenticate = require('./auth');
 // author and version from our package.json file
+// eslint-disable-next-line
 const { author, version } = require('../package.json');
 
 const logger = require('./logger');
