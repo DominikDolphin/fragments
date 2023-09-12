@@ -7,7 +7,7 @@ const authenticate = require('./auth');
 // author and version from our package.json file
 // eslint-disable-next-line
 const { author, version } = require('../package.json');
-
+const { createErrorResponse } = require('./response.js');
 const logger = require('./logger');
 const pino = require('pino-http')({
   // Use our default logger instance, which is already configured
@@ -37,13 +37,7 @@ app.use('/', require('./routes'));
 
 // Add 404 middleware to handle any requests for resources that can't be found
 app.use((req, res) => {
-  res.status(404).json({
-    status: 'error',
-    error: {
-      message: 'not found',
-      code: 404,
-    },
-  });
+  res.status(404).json(createErrorResponse(404, 'not found'));
 });
 
 // Add error-handling middleware to deal with anything else
