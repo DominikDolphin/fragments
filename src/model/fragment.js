@@ -17,13 +17,26 @@ const {
 
 class Fragment {
   constructor({ id, ownerId, created, updated, type, size = 0 }) {
-
     // Validate Data
-    if (type == undefined) { throw new Error("Type for fragment is required");}
-    if (ownerId == undefined) { throw new Error("OwnerID for fragment is required");}
-    if (typeof size !== 'number') { throw new Error("Size must be a number");}
-    if (size < 0 ) { throw new Error("Size must be greater than 0");}
+    if (type == undefined) {
+      throw new Error('Type for fragment is required');
+    }
+    if (ownerId == undefined) {
+      throw new Error('OwnerID for fragment is required');
+    }
+    if (typeof size !== 'number') {
+      throw new Error('Size must be a number');
+    }
+    if (size < 0) {
+      throw new Error('Size must be greater than 0');
+    }
     
+    if (!Fragment.isSupportedType(type)){
+      throw new Error('Not a supported type');
+    }
+ 
+
+
     // Set Data
     this.id = id || randomUUID();
     this.ownerId = ownerId;
@@ -67,7 +80,7 @@ class Fragment {
    */
   static delete(ownerId, id) {
     // TODO
-    return deleteFragment(ownerId,id);
+    return deleteFragment(ownerId, id);
   }
 
   /**
@@ -113,6 +126,8 @@ class Fragment {
    */
   get isText() {
     // TODO
+    const mimeType = this.mimeType;
+    return mimeType.startsWith('text/');
   }
 
   /**
@@ -121,6 +136,7 @@ class Fragment {
    */
   get formats() {
     // TODO
+    return ['text', 'image', 'application'];
   }
 
   /**
@@ -130,6 +146,22 @@ class Fragment {
    */
   static isSupportedType(value) {
     // TODO
+    const { type } = contentType.parse(value);
+
+
+    const validContentType = [
+      'text/plain',
+      'text/plain; charset=utf-8',
+      'text/markdown',
+      'text/html',
+      'application/json',
+      'image/png',
+      'image/jpeg',
+      'image/webp',
+      'image/gif'
+    ];
+    //return true;
+    return validContentType.includes(type);
   }
 }
 

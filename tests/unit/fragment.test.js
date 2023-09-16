@@ -12,14 +12,14 @@ const validTypes = [
   `image/png`,
   `image/jpeg`,
   `image/webp`,
-  `image/gif`,
+  `image/gif`
  
 ];
 
 describe('Fragment class', () => {
-  // test('common formats are supported', () => {
-  //   validTypes.forEach((format) => expect(Fragment.isSupportedType(format)).toBe(true));
-  // });
+  test('common formats are supported', () => {
+    validTypes.forEach((format) => expect(Fragment.isSupportedType(format)).toBe(true));
+  });
 
   describe('Fragment()', () => {
     test('ownerId and type are required', () => {
@@ -36,7 +36,6 @@ describe('Fragment class', () => {
 
     test('type can be a simple media type', () => {
       const fragment = new Fragment({ ownerId: '1234', type: 'text/plain', size: 0 });
-      console.log('WHAAAAT');
       expect(fragment.type).toEqual('text/plain');
     });
 
@@ -66,18 +65,18 @@ describe('Fragment class', () => {
       expect(() => new Fragment({ ownerId: '1234', type: 'text/plain', size: -1 })).toThrow();
     });
 
-    // test('invalid types throw', () => {
-    //   expect(
-    //     () => new Fragment({ ownerId: '1234', type: 'application/msword', size: 1 })
-    //   ).toThrow();
-    // });
+    test('invalid types throw', () => {
+      expect(
+        () => new Fragment({ ownerId: '1234', type: 'application/msword', size: 1 })
+      ).toThrow();
+    });
 
-    // test('valid types can be set', () => {
-    //   validTypes.forEach((format) => {
-    //     const fragment = new Fragment({ ownerId: '1234', type: format, size: 1 });
-    //     expect(fragment.type).toEqual(format);
-    //   });
-    // });
+    test('valid types can be set', () => {
+      validTypes.forEach((format) => {
+        const fragment = new Fragment({ ownerId: '1234', type: format, size: 1 });
+        expect(fragment.type).toEqual(format);
+      });
+    });
 
     test('fragments have an id', () => {
       const fragment = new Fragment({ ownerId: '1234', type: 'text/plain', size: 1 });
@@ -113,49 +112,49 @@ describe('Fragment class', () => {
       });
       expect(Date.parse(fragment.updated)).not.toBeNaN();
     });
-  // });
+  });
 
-  // describe('isSupportedType()', () => {
-  //   test('common text types are supported, with and without charset', () => {
-  //     expect(Fragment.isSupportedType('text/plain')).toBe(true);
-  //     expect(Fragment.isSupportedType('text/plain; charset=utf-8')).toBe(true);
-  //   });
+  describe('isSupportedType()', () => {
+    test('common text types are supported, with and without charset', () => {
+      expect(Fragment.isSupportedType('text/plain')).toBe(true);
+      expect(Fragment.isSupportedType('text/plain; charset=utf-8')).toBe(true);
+    });
 
-  //   test('other types are not supported', () => {
-  //     expect(Fragment.isSupportedType('application/octet-stream')).toBe(false);
-  //     expect(Fragment.isSupportedType('application/msword')).toBe(false);
-  //     expect(Fragment.isSupportedType('audio/webm')).toBe(false);
-  //     expect(Fragment.isSupportedType('video/ogg')).toBe(false);
-  //   });
-  // });
+    test('other types are not supported', () => {
+      expect(Fragment.isSupportedType('application/octet-stream')).toBe(false);
+      expect(Fragment.isSupportedType('application/msword')).toBe(false);
+      expect(Fragment.isSupportedType('audio/webm')).toBe(false);
+      expect(Fragment.isSupportedType('video/ogg')).toBe(false);
+    });
+  });
 
-  // describe('mimeType, isText', () => {
-  //   test('mimeType returns the mime type without charset', () => {
-  //     const fragment = new Fragment({
-  //       ownerId: '1234',
-  //       type: 'text/plain; charset=utf-8',
-  //       size: 0,
-  //     });
-  //     expect(fragment.type).toEqual('text/plain; charset=utf-8');
-  //     expect(fragment.mimeType).toEqual('text/plain');
-  //   });
+  describe('mimeType, isText', () => {
+    test('mimeType returns the mime type without charset', () => {
+      const fragment = new Fragment({
+        ownerId: '1234',
+        type: 'text/plain; charset=utf-8',
+        size: 0,
+      });
+      expect(fragment.type).toEqual('text/plain; charset=utf-8');
+      expect(fragment.mimeType).toEqual('text/plain');
+    });
 
-  //   test('mimeType returns the mime type if charset is missing', () => {
-  //     const fragment = new Fragment({ ownerId: '1234', type: 'text/plain', size: 0 });
-  //     expect(fragment.type).toEqual('text/plain');
-  //     expect(fragment.mimeType).toEqual('text/plain');
-  //   });
+    test('mimeType returns the mime type if charset is missing', () => {
+      const fragment = new Fragment({ ownerId: '1234', type: 'text/plain', size: 0 });
+      expect(fragment.type).toEqual('text/plain');
+      expect(fragment.mimeType).toEqual('text/plain');
+    });
 
-  //   test('isText return expected results', () => {
-  //     // Text fragment
-  //     const fragment = new Fragment({
-  //       ownerId: '1234',
-  //       type: 'text/plain; charset=utf-8',
-  //       size: 0,
-  //     });
-  //     expect(fragment.isText).toBe(true);
-  //   });
-  // });
+    test('isText return expected results', () => {
+      // Text fragment
+      const fragment = new Fragment({
+        ownerId: '1234',
+        type: 'text/plain; charset=utf-8',
+        size: 0,
+      });
+      expect(fragment.isText).toBe(true);
+    });
+  });
 
   // describe('formats', () => {
   //   test('formats returns the expected result for plain text', () => {
@@ -251,5 +250,5 @@ describe('Fragment class', () => {
   //     await Fragment.delete('1234', fragment.id);
   //     expect(() => Fragment.byId('1234', fragment.id)).rejects.toThrow();
   //   });
-  });
+  // });
 });
