@@ -30,12 +30,10 @@ class Fragment {
     if (size < 0) {
       throw new Error('Size must be greater than 0');
     }
-    
-    if (!Fragment.isSupportedType(type)){
+
+    if (!Fragment.isSupportedType(type)) {
       throw new Error('Not a supported type');
     }
- 
-
 
     // Set Data
     this.id = id || randomUUID();
@@ -131,12 +129,52 @@ class Fragment {
   }
 
   /**
+   * Returns true if this fragment is a image/* mime type
+   * @returns {boolean} true if fragment's type is image/*
+   */
+  get isImage() {
+    // TODO
+    const mimeType = this.mimeType;
+    return mimeType.startsWith('image/');
+  }
+
+  /**
+   * Returns true if this fragment is an application/* mime type
+   * @returns {boolean} true if fragment's type is image/*
+   */
+  get isApplication() {
+    // TODO
+    const mimeType = this.mimeType;
+    return mimeType.startsWith('application/');
+  }
+
+  /**
    * Returns the formats into which this fragment type can be converted
    * @returns {Array<string>} list of supported mime types
    */
   get formats() {
     // TODO
-    return ['text', 'image', 'application'];
+    const { type } = contentType.parse(this.type);
+
+    //If it is already a full type name, just return itself.
+    if (Fragment.isSupportedType(type)) {
+      return [type];
+    }
+
+    //if it is a text content-type.
+    if (this.isText) {
+      return ['text/plain', 'text/markdown', 'text/html'];
+    }
+
+    //if it is an image content-type.
+    if (this.isImage) {
+      return ['image/png', 'image/jpeg', 'image/webp', 'image/gif'];
+    }
+
+    //if it is an application content-type.
+    if (this.isApplication) {
+      return ['application/json'];
+    }
   }
 
   /**
@@ -148,7 +186,6 @@ class Fragment {
     // TODO
     const { type } = contentType.parse(value);
 
-
     const validContentType = [
       'text/plain',
       'text/plain; charset=utf-8',
@@ -158,7 +195,7 @@ class Fragment {
       'image/png',
       'image/jpeg',
       'image/webp',
-      'image/gif'
+      'image/gif',
     ];
     //return true;
     return validContentType.includes(type);
