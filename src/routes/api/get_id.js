@@ -19,6 +19,8 @@ module.exports = async (req, res) => {
     res.setHeader('Cache-Control', 'no-cache');
     res
       .status(404)
-      .json(createErrorResponse(`The requested fragment id does not exist. ID: ${fragmentID}`));
+      .json(
+        createErrorResponse(404, `The requested fragment id does not exist. ID: ${fragmentID}`)
+      );
   }
 };
