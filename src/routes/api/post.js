@@ -3,21 +3,22 @@ const { Fragment } = require('../../model/fragment.js');
 /**
  * Get a list of fragments for the current user
  */
-module.exports = (req, res) => {
+module.exports = async(req, res) => {
+
   // Get buffer size.
-  let bufferSize = Buffer.from(req.body).length;
+  let buffer = Buffer.from(req.body);
+  let bufferSize = buffer.length;
 
   // Create the fragment
-  let newFragment = new Fragment({
+  const fragment = new Fragment({
     ownerId: req.user,
     type: req.headers['content-type'],
     size: bufferSize,
   });
 
-  //Save the fragment
-  //TODO
-  // newFragment.save();
+  await fragment.save();
+  await fragment.setData(buffer);
 
   //Respond with the fragment.
-  res.status(201).json(newFragment);
+  res.status(201).json(fragment);
 };
