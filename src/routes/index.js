@@ -1,6 +1,8 @@
 const express = require('express');
 const { authenticate } = require('../auth');
 
+// app.use(express.json());
+
 // version and author from package.json
 const { version, author } = require('../../package.json');
 const { createSuccessResponse } = require('../response.js');
@@ -29,5 +31,6 @@ router.get('/', (req, res) => {
     })
   );
 });
+
 
 module.exports = router;
