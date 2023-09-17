@@ -14,6 +14,8 @@ router.get('/fragments/:id', require('./get_id'));
 
 router.get('/fragments/:id/info', require('./get_id_info'));
 
+router.delete('/fragments/:id', require('./delete_id'));
+
 // Support sending various Content-Types on the body up to 5M in size
 const rawBody = () =>
   express.raw({
