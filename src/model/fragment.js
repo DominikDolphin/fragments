@@ -52,11 +52,7 @@ class Fragment {
    */
   static async byUser(ownerId, expand = false) {
     // TODO
-    try {
-      listFragments(ownerId, expand);
-    } catch (e) {
-      return e;
-    }
+    return listFragments(ownerId, expand);
   }
 
   /**
@@ -66,8 +62,16 @@ class Fragment {
    * @returns Promise<Fragment>
    */
   static async byId(ownerId, id) {
-    // TODO
-    return readFragmentData(ownerId, id);
+
+    try {
+      let frag = await readFragment(ownerId, id);
+      if (!frag){
+        throw new Error('Could not find fragment');
+      }
+      return frag;
+    } catch (error) {
+      throw new Error(`Error getting id: ${error}`);
+    }
   }
 
   /**
@@ -78,7 +82,11 @@ class Fragment {
    */
   static delete(ownerId, id) {
     // TODO
-    return deleteFragment(ownerId, id);
+    try {
+      return deleteFragment(ownerId, id);
+    } catch (err) {
+      throw new Error('Hey');
+    }
   }
 
   /**
@@ -87,6 +95,7 @@ class Fragment {
    */
   save() {
     // TODO
+    this.updated = new Date().toISOString();
     writeFragment(this);
   }
 
@@ -96,6 +105,7 @@ class Fragment {
    */
   getData() {
     // TODO
+    return readFragmentData(this.ownerId, this.id);
   }
 
   /**
@@ -104,7 +114,13 @@ class Fragment {
    * @returns Promise<void>
    */
   async setData(data) {
-    writeFragmentData(this.ownerId, this.id, data);
+    if (!data) {
+      throw new Error('SetData requires a buffer');
+    }
+
+    this.size = data.length;
+    this.updated = new Date().toISOString();
+    return writeFragmentData(this.ownerId, this.id, data);
     // TODO
   }
 
@@ -175,6 +191,9 @@ class Fragment {
     if (this.isApplication) {
       return ['application/json'];
     }
+
+    // Default return (ESLint requires getter-return)
+    return [];
   }
 
   /**
