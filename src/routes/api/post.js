@@ -3,8 +3,7 @@ const { Fragment } = require('../../model/fragment.js');
 /**
  * Get a list of fragments for the current user
  */
-module.exports = async(req, res) => {
-
+module.exports = async (req, res) => {
   // Get buffer size.
   let buffer = Buffer.from(req.body);
   let bufferSize = buffer.length;
@@ -20,5 +19,9 @@ module.exports = async(req, res) => {
   await fragment.setData(buffer);
 
   //Respond with the fragment.
-  res.status(201).json(fragment);
+  res.status(201).json(
+    createSuccessResponse({
+      fragment: fragment,
+    })
+  );
 };

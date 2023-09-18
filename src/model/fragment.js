@@ -51,7 +51,6 @@ class Fragment {
    * @returns Promise<Array<Fragment>>
    */
   static async byUser(ownerId, expand = false) {
-    // TODO
     return listFragments(ownerId, expand);
   }
 
@@ -62,10 +61,9 @@ class Fragment {
    * @returns Promise<Fragment>
    */
   static async byId(ownerId, id) {
-
     try {
       let frag = await readFragment(ownerId, id);
-      if (!frag){
+      if (!frag) {
         throw new Error('Could not find fragment');
       }
       return frag;
@@ -81,11 +79,10 @@ class Fragment {
    * @returns Promise<void>
    */
   static delete(ownerId, id) {
-    // TODO
     try {
       return deleteFragment(ownerId, id);
     } catch (err) {
-      throw new Error('Hey');
+      throw new Error(`Error deleting fragment: ${err}`);
     }
   }
 
@@ -94,7 +91,6 @@ class Fragment {
    * @returns Promise<void>
    */
   save() {
-    // TODO
     this.updated = new Date().toISOString();
     writeFragment(this);
   }
@@ -104,7 +100,6 @@ class Fragment {
    * @returns Promise<Buffer>
    */
   getData() {
-    // TODO
     return readFragmentData(this.ownerId, this.id);
   }
 
@@ -121,7 +116,6 @@ class Fragment {
     this.size = data.length;
     this.updated = new Date().toISOString();
     return writeFragmentData(this.ownerId, this.id, data);
-    // TODO
   }
 
   /**
@@ -139,7 +133,6 @@ class Fragment {
    * @returns {boolean} true if fragment's type is text/*
    */
   get isText() {
-    // TODO
     const mimeType = this.mimeType;
     return mimeType.startsWith('text/');
   }
@@ -149,7 +142,6 @@ class Fragment {
    * @returns {boolean} true if fragment's type is image/*
    */
   get isImage() {
-    // TODO
     const mimeType = this.mimeType;
     return mimeType.startsWith('image/');
   }
@@ -159,7 +151,6 @@ class Fragment {
    * @returns {boolean} true if fragment's type is image/*
    */
   get isApplication() {
-    // TODO
     const mimeType = this.mimeType;
     return mimeType.startsWith('application/');
   }
@@ -169,7 +160,6 @@ class Fragment {
    * @returns {Array<string>} list of supported mime types
    */
   get formats() {
-    // TODO
     const { type } = contentType.parse(this.type);
 
     //If it is already a full type name, just return itself.
@@ -202,7 +192,6 @@ class Fragment {
    * @returns {boolean} true if we support this Content-Type (i.e., type/subtype)
    */
   static isSupportedType(value) {
-    // TODO
     const { type } = contentType.parse(value);
 
     const validContentType = [
@@ -216,7 +205,7 @@ class Fragment {
       'image/webp',
       'image/gif',
     ];
-    //return true;
+
     return validContentType.includes(type);
   }
 }
