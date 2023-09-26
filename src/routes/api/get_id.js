@@ -12,7 +12,7 @@ module.exports = async (req, res) => {
 
     res.status(200).json(
       createSuccessResponse({
-        fragments: foundFragment,
+        fragment: foundFragment,
       })
     );
 
