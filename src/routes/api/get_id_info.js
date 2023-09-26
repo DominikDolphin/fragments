@@ -1,5 +1,6 @@
 const { createSuccessResponse, createErrorResponse } = require('../../response.js');
 const { Fragment } = require('../../model/fragment.js');
+const logger = require('./../../logger.js');
 /**
  * Get a list of fragments for the current user
  */
@@ -14,6 +15,8 @@ module.exports = async (req, res) => {
         fragments: foundFragment,
       })
     );
+
+    logger.debug({ foundFragment }, `Found fragments by ID info`);
   } catch (err) {
     res.setHeader('Cache-Control', 'no-cache');
     res
@@ -21,5 +24,7 @@ module.exports = async (req, res) => {
       .json(
         createErrorResponse(404, `The requested fragment id does not exist. ID: ${fragmentID}`)
       );
+
+    logger.debug({ fragmentID }, `unable to find fragment`);
   }
 };

@@ -1,5 +1,6 @@
 const { createSuccessResponse } = require('../../response.js');
 const { Fragment } = require('../../model/fragment.js');
+const logger = require('./../../logger.js');
 /**
  * Get a list of fragments for the current user
  */
@@ -24,4 +25,6 @@ module.exports = async (req, res) => {
       fragment: fragment,
     })
   );
+
+  logger.debug({ fragment }, `Created new fragment`);
 };
