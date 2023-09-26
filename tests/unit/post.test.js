@@ -1,5 +1,4 @@
 const request = require('supertest');
-const { Fragment } = require('../../src/model/fragment.js');
 const app = require('../../src/app');
 
 describe('POST /v1/fragments', () => {

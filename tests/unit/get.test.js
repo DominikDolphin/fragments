@@ -1,5 +1,4 @@
 const request = require('supertest');
-const { Fragment } = require('../../src/model/fragment.js');
 const app = require('../../src/app');
 
 describe('GET /v1/fragments', () => {
@@ -18,5 +17,4 @@ describe('GET /v1/fragments', () => {
     expect(Array.isArray(res.body.fragments)).toBe(true);
   });
 
-  // TODO: we'll need to add tests to check the contents of the fragments array later
 });
