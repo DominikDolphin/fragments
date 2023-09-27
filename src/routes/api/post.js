@@ -20,6 +20,7 @@ module.exports = async (req, res) => {
   await fragment.setData(buffer);
 
   //Respond with the fragment.
+  res.setHeader('Content-Location', `${req.headers.host}/v1/fragments/${fragment.id}`);
   res.status(201).json(
     createSuccessResponse({
       fragment: fragment,
