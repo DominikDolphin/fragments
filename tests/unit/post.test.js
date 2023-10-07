@@ -15,6 +15,9 @@ describe('POST /v1/fragments', () => {
     expect(res.body.fragment.id).toMatch(
       /^[0-9a-fA-F]{8}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{12}$/
     );
+    expect(res.body.fragment.type).toBe('application/json');
+    expect(res.body.fragment.size).toBe(15);
+    expect(res.body.fragment.ownerId).toBeDefined();
     expect(Date.parse(res.body.fragment.created)).not.toBeNaN();
     expect(Date.parse(res.body.fragment.updated)).not.toBeNaN();
   });
@@ -31,7 +34,6 @@ describe('POST /v1/fragments', () => {
       .auth('user1@email.com', 'password1')
       .set('Content-Type', 'text/plains');
 
-    console.log(res.body);
     expect(res.body.error.code).toBe(415);
   });
 });

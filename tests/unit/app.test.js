@@ -28,4 +28,13 @@ describe('GET v1/fragments', () => {
     expect(res.body.fragments).toEqual([]);
   });
 
+  test('Posting a content type that does not exist results in error', async () => {
+    const res = await request(app)
+      .post('/v1/fragments')
+      .auth('user1@email.com', 'password1')
+      .set('Content-Type', 'asdf');
+
+    expect(res.body.status).toBe('error');
+    expect(res.body.error.code).toBe(500);
+  });
 });
