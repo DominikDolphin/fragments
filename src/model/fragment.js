@@ -79,11 +79,7 @@ class Fragment {
    * @returns Promise<void>
    */
   static delete(ownerId, id) {
-    try {
-      return deleteFragment(ownerId, id);
-    } catch (err) {
-      throw new Error(`Error deleting fragment: ${err}`);
-    }
+    return deleteFragment(ownerId, id);
   }
 
   /**
@@ -196,7 +192,6 @@ class Fragment {
 
     const validContentType = [
       'text/plain',
-      'text/plain; charset=utf-8',
       'text/markdown',
       'text/html',
       'application/json',

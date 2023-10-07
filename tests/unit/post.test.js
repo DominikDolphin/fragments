@@ -19,4 +19,19 @@ describe('POST /v1/fragments', () => {
     expect(Date.parse(res.body.fragment.updated)).not.toBeNaN();
   });
 
+  test('Missing Content Type', async () => {
+    const res = await request(app).post('/v1/fragments').auth('user1@email.com', 'password1');
+
+    expect(res.body.error.code).toBe(500);
+  });
+
+  test('Invalid Media Type', async () => {
+    const res = await request(app)
+      .post('/v1/fragments')
+      .auth('user1@email.com', 'password1')
+      .set('Content-Type', 'text/plains');
+
+    console.log(res.body);
+    expect(res.body.error.code).toBe(415);
+  });
 });

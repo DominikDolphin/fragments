@@ -18,7 +18,6 @@ module.exports = async (req, res) => {
 
     logger.debug({ foundFragment }, `Found fragments by ID info`);
   } catch (err) {
-    res.setHeader('Cache-Control', 'no-cache');
     res
       .status(404)
       .json(

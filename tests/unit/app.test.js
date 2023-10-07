@@ -27,4 +27,5 @@ describe('GET v1/fragments', () => {
     expect(res.body.status).toBe('ok');
     expect(res.body.fragments).toEqual([]);
   });
+
 });

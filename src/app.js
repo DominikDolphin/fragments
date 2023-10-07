@@ -40,6 +40,7 @@ app.use((req, res) => {
   res.status(404).json(createErrorResponse(404, 'not found'));
 });
 
+
 // Add error-handling middleware to deal with anything else
 // eslint-disable-next-line no-unused-vars
 app.use((err, req, res, next) => {
