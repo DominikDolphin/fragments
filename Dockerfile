@@ -1,15 +1,18 @@
 # Created Oct 9th, 2023
 # Last modified Oct 9th, 2023
 
-# Use node version 20.8.0 with alpine
+# Use node with alpine using a specific commit
 FROM node:18-alpine3.17@sha256:8cdc5ff72de424adca7217dfc9a6c4ab3f244673789243d0559a6204e0439a24
-
 
 LABEL maintainer="Dominik Thibaudeau <dthibaudeau@myseneca.ca>"
 LABEL description="Fragments node.js microservice"
 
 # We default to use port 8080 in our service
 ENV PORT=8080
+
+# setting this environment variable for enabling performance and security related optimizations.
+# https://expressjs.com/en/advanced/best-practice-performance.html#set-node_env-to-production
+ENV NODE_ENV=production
 
 # Reduce npm spam when installing within Docker
 # https://docs.npmjs.com/cli/v8/using-npm/config#loglevel
