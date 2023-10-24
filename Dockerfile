@@ -1,8 +1,9 @@
 # Created Oct 9th, 2023
 # Last modified Oct 9th, 2023
 
-# Use node version 20.6.0
-FROM node:20.6.0
+# Use node version 20.8.0 with alpine
+FROM node:18-alpine3.17@sha256:8cdc5ff72de424adca7217dfc9a6c4ab3f244673789243d0559a6204e0439a24
+
 
 LABEL maintainer="Dominik Thibaudeau <dthibaudeau@myseneca.ca>"
 LABEL description="Fragments node.js microservice"
