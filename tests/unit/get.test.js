@@ -49,5 +49,57 @@ describe('GET /v1/fragments', () => {
       expect(res2.body.fragment.size).toBe(bufferMessage.length);
       expect(res2.body.fragment.type).toBe('text/plain');
     });
+
+    test('GET /v1/fragments/:id returns expected content-type using text/html', async () => {
+      const contentTypeTest = 'text/html';
+      const bufferMessage = 'message101';
+      const data = Buffer.from(bufferMessage);
+
+      // post to create a fragment
+      const res1 = await request(app)
+        .post('/v1/fragments')
+        .auth('user1@email.com', 'password1')
+        .set('Content-type', contentTypeTest)
+        .send(data);
+
+      const fragmentID = res1.body.fragment.id;
+
+      // API request for GET id
+      const res2 = await request(app)
+        .get(`/v1/fragments/${fragmentID}`)
+        .auth('user1@email.com', 'password1');
+
+      expect(res2.statusCode).toBe(200);
+      expect(res2.body.fragment.ownerId).toBe(res1.body.fragment.ownerId);
+      expect(res2.body.fragment.id).toBe(fragmentID);
+      expect(res2.body.fragment.size).toBe(bufferMessage.length);
+      expect(res2.body.fragment.type).toBe(contentTypeTest);
+    });
+
+    test('GET /v1/fragments/:id returns expected content-type using text/markdown', async () => {
+      const contentTypeTest = 'text/markdown';
+      const bufferMessage = 'message101';
+      const data = Buffer.from(bufferMessage);
+
+      // post to create a fragment
+      const res1 = await request(app)
+        .post('/v1/fragments')
+        .auth('user1@email.com', 'password1')
+        .set('Content-type', contentTypeTest)
+        .send(data);
+
+      const fragmentID = res1.body.fragment.id;
+
+      // API request for GET id
+      const res2 = await request(app)
+        .get(`/v1/fragments/${fragmentID}`)
+        .auth('user1@email.com', 'password1');
+
+      expect(res2.statusCode).toBe(200);
+      expect(res2.body.fragment.ownerId).toBe(res1.body.fragment.ownerId);
+      expect(res2.body.fragment.id).toBe(fragmentID);
+      expect(res2.body.fragment.size).toBe(bufferMessage.length);
+      expect(res2.body.fragment.type).toBe(contentTypeTest);
+    });
   });
 });
