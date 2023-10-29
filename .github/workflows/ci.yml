@@ -9,10 +9,12 @@ on:
     branches:
       - main
       - assignment1
+      - lab7
   push:
     branches:
       - main
       - assignment1
+      - lab7
 
 jobs:
   lint:
