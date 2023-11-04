@@ -9,12 +9,9 @@ module.exports = async (req, res) => {
 
   try {
     let foundFragment = await Fragment.byId(req.user, fragmentID);
+    let data = await foundFragment.getData();
 
-    res.status(200).json(
-      createSuccessResponse({
-        fragment: foundFragment,
-      })
-    );
+    res.status(200).json(data.toString());
 
     logger.debug({ foundFragment }, `Got fragment from id ${fragmentID}`);
   } catch (err) {
