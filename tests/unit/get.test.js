@@ -18,7 +18,7 @@ describe('GET /v1/fragments', () => {
       .get('/v1/fragments')
       .auth('user1@email.com', 'password1')
       .send(data);
-      
+
     expect(res.statusCode).toBe(200);
     expect(res.body.status).toBe('ok');
     expect(Array.isArray(res.body.fragments)).toBe(true);
@@ -44,10 +44,7 @@ describe('GET /v1/fragments', () => {
         .auth('user1@email.com', 'password1');
 
       expect(res2.statusCode).toBe(200);
-      expect(res2.body.fragment.ownerId).toBe(res1.body.fragment.ownerId);
-      expect(res2.body.fragment.id).toBe(fragmentID);
-      expect(res2.body.fragment.size).toBe(bufferMessage.length);
-      expect(res2.body.fragment.type).toBe('text/plain');
+      expect(res2.body).toBe(bufferMessage);
     });
 
     test('GET /v1/fragments/:id returns expected content-type using text/html', async () => {
@@ -70,10 +67,7 @@ describe('GET /v1/fragments', () => {
         .auth('user1@email.com', 'password1');
 
       expect(res2.statusCode).toBe(200);
-      expect(res2.body.fragment.ownerId).toBe(res1.body.fragment.ownerId);
-      expect(res2.body.fragment.id).toBe(fragmentID);
-      expect(res2.body.fragment.size).toBe(bufferMessage.length);
-      expect(res2.body.fragment.type).toBe(contentTypeTest);
+      expect(res2.body).toBe(bufferMessage);
     });
 
     test('GET /v1/fragments/:id returns expected content-type using text/markdown', async () => {
@@ -96,10 +90,7 @@ describe('GET /v1/fragments', () => {
         .auth('user1@email.com', 'password1');
 
       expect(res2.statusCode).toBe(200);
-      expect(res2.body.fragment.ownerId).toBe(res1.body.fragment.ownerId);
-      expect(res2.body.fragment.id).toBe(fragmentID);
-      expect(res2.body.fragment.size).toBe(bufferMessage.length);
-      expect(res2.body.fragment.type).toBe(contentTypeTest);
+      expect(res2.body).toBe(bufferMessage);
     });
   });
 });

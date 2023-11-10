@@ -11,6 +11,8 @@ const router = express.Router();
 // GET /v1/fragments
 router.get('/fragments', require('./get'));
 
+router.get('/fragments/:id.:ext', require('./get_id_ext'));
+
 router.get('/fragments/:id', require('./get_id'));
 
 router.get('/fragments/:id/info', require('./get_id_info'));

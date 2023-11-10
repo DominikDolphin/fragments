@@ -153,6 +153,26 @@ describe('Fragment class', () => {
       });
       expect(fragment.isText).toBe(true);
     });
+
+    test('isImage return expected results', () => {
+      // Text fragment
+      const fragment = new Fragment({
+        ownerId: '1234',
+        type: 'image/png; charset=utf-8',
+        size: 0,
+      });
+      expect(fragment.isImage).toBe(true);
+    });
+
+    test('isApplication return expected results', () => {
+      // Text fragment
+      const fragment = new Fragment({
+        ownerId: '1234',
+        type: 'application/json; charset=utf-8',
+        size: 0,
+      });
+      expect(fragment.isApplication).toBe(true);
+    });
   });
 
   describe('formats', () => {
