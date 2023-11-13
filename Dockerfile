@@ -46,5 +46,6 @@ USER node
 CMD ["node", "src/index.js"]
 
 # Add a healthcheck
-HEALTHCHECK --interval=30s --timeout=30s --start-period=5s --retries=3 CMD [ "curl", "-f", "http://localhost:${PORT}/v1/fragments" ] || exit 1;
+HEALTHCHECK --interval=30s --timeout=30s --start-period=5s --retries=3 \
+  CMD curl --fail localhost || exit 1;
 
