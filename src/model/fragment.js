@@ -156,30 +156,23 @@ class Fragment {
    * @returns {Array<string>} list of supported mime types
    */
   get formats() {
-    const { type } = contentType.parse(this.type);
-
-    //If it is already a full type name, just return itself.
-    if (Fragment.isSupportedType(type)) {
-      return [type];
+    switch (this.mimeType) {
+      case 'text/plain':
+        return ['text/plain'];
+      case 'text/markdown':
+        return ['text/markdown', 'text/html', 'text/plain'];
+      case 'text/html':
+        return ['text/html', 'text/plain'];
+      case 'application/json':
+        return ['application/json', 'text/plain'];
+      case 'image/png':
+      case 'image/jpeg':
+      case 'image/webp':
+      case 'image/gif':
+        return ['image/png', 'image/jpeg', 'image/webp', 'image/gif'];
+      default:
+        return [];
     }
-
-    //if it is a text content-type.
-    if (this.isText) {
-      return ['text/plain', 'text/markdown', 'text/html'];
-    }
-
-    //if it is an image content-type.
-    if (this.isImage) {
-      return ['image/png', 'image/jpeg', 'image/webp', 'image/gif'];
-    }
-
-    //if it is an application content-type.
-    if (this.isApplication) {
-      return ['application/json'];
-    }
-
-    // Default return (ESLint requires getter-return)
-    return [];
   }
 
   /**

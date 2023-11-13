@@ -8,13 +8,12 @@ on:
   pull_request:
     branches:
       - main
-      - assignment1
-      - lab7
+      - Assignment2
+
   push:
     branches:
       - main
-      - assignment1
-      - lab7
+      - Assignment2
 
 jobs:
   lint:
@@ -90,7 +89,7 @@ jobs:
       # https://github.com/docker/setup-buildx-action
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v2
-    
+
       # Login to Docker Hub using GitHub secrets, see:
       # https://github.com/docker/login-action
       - name: Login to DockerHub
@@ -116,4 +115,3 @@ jobs:
           push: true
           # Use 3 tags :sha-sha-7d821bd14e0d6c381dc57a5369ae1a3a9220664f, :main, and :latest
           tags: ${{ env.DOCKERHUB_REPO }}:${{ env.SHA_TAG }}, ${{ env.DOCKERHUB_REPO }}:main, ${{ env.DOCKERHUB_REPO }}:latest
-          

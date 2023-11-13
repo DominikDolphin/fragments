@@ -1,6 +1,7 @@
-const { createSuccessResponse, createErrorResponse } = require('../../response.js');
+const { createErrorResponse } = require('../../response.js');
 const { Fragment } = require('../../model/fragment.js');
 const logger = require('./../../logger.js');
+
 /**
  * Get a list of fragments for the current user
  */
@@ -10,11 +11,9 @@ module.exports = async (req, res) => {
   try {
     let foundFragment = await Fragment.byId(req.user, fragmentID);
 
-    res.status(200).json(
-      createSuccessResponse({
-        fragment: foundFragment,
-      })
-    );
+    let data = await foundFragment.getData();
+
+    res.status(200).json(data.toString());
 
     logger.debug({ foundFragment }, `Got fragment from id ${fragmentID}`);
   } catch (err) {
