@@ -31,7 +31,8 @@ WORKDIR /app
 COPY package*.json /app/
 
 # Install node dependencies defined in package-lock.json
-RUN npm install
+# RUN npm install
+RUN npm ci --production
 
 # Copy src to /app/src/
 COPY ./src ./src
@@ -40,4 +41,10 @@ COPY ./src ./src
 COPY ./tests/.htpasswd ./tests/.htpasswd
 
 # Start the container by running our server
-CMD ["npm", "start"]
+
+# CMD ["npm", "start"]
+USER node
+CMD ["node", "src/index.js"]
+
+# add a healthcheck
+HEALTHCHECK --interval=30s --timeout=30s --start-period=5s --retries=3 CMD [ "curl", "-f", "http://localhost:${PORT}/v1/fragments" ] || exit 1;
