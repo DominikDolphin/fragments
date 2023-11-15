@@ -13,7 +13,13 @@ module.exports = async (req, res) => {
 
     let data = await foundFragment.getData();
 
-    res.status(200).json(data.toString());
+    // Using writeHead since Express automatically adds UTF-8 to the content-type header
+    res.writeHead(200, {
+      'Content-Type': foundFragment.type,
+      'Content-Length': foundFragment.size,
+    });
+    res.write(data.toString());
+    res.end();
 
     logger.debug({ foundFragment }, `Got fragment from id ${fragmentID}`);
   } catch (err) {
