@@ -38,13 +38,15 @@ describe('GET /v1/fragments', () => {
 
       const fragmentID = res1.body.fragment.id;
 
+   
       // API request for GET id
       const res2 = await request(app)
         .get(`/v1/fragments/${fragmentID}`)
         .auth('user1@email.com', 'password1');
 
+        console.log(res2);
       expect(res2.statusCode).toBe(200);
-      expect(res2.body).toBe(bufferMessage);
+      expect(res2.text).toBe(bufferMessage);
     });
 
     test('GET /v1/fragments/:id returns expected content-type using text/html', async () => {
@@ -67,7 +69,7 @@ describe('GET /v1/fragments', () => {
         .auth('user1@email.com', 'password1');
 
       expect(res2.statusCode).toBe(200);
-      expect(res2.body).toBe(bufferMessage);
+      expect(res2.text).toBe(bufferMessage);
     });
 
     test('GET /v1/fragments/:id returns expected content-type using text/markdown', async () => {
@@ -90,7 +92,7 @@ describe('GET /v1/fragments', () => {
         .auth('user1@email.com', 'password1');
 
       expect(res2.statusCode).toBe(200);
-      expect(res2.body).toBe(bufferMessage);
+      expect(res2.text).toBe(bufferMessage);
     });
   });
 });
