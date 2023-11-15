@@ -1,5 +1,6 @@
 const express = require('express');
 const { authenticate } = require('../auth');
+const { hostname } = require('os');
 
 // app.use(express.json());
 
@@ -28,6 +29,7 @@ router.get('/', (req, res) => {
       author,
       githubUrl: 'https://github.com/DominikDolphin/fragments',
       version,
+      hostname: hostname(),
     })
   );
 });
