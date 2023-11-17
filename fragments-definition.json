@@ -32,11 +32,11 @@
         },
         {
           "name": "AWS_COGNITO_CLIENT_ID",
-          "value": "NOTE: Add on GitHub Encryped Secrets"
+          "value": "13tmkko8n2si1l51ukk5l2m9ru"
         },
         {
           "name": "AWS_COGNITO_POOL_ID",
-          "value": "NOTE: Add on GitHub Encryped Secrets"
+          "value": "us-east-1_IDLTN0OWG"
         },
         {
           "name": "HTPASSWD_FILE",
@@ -50,6 +50,7 @@
           "name": "AWS_S3_BUCKET_NAME",
           "value": "dthibaudeau-fragments"
         }
+
       ],
       "resourceRequirements": null,
       "ulimits": null,
