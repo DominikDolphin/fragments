@@ -93,7 +93,7 @@ jobs:
           environment-variables: |
             LOG_LEVEL=info
             NODE_ENV=production
-            API_URL=EC2Con-EcsEl-oqVvui4EPqAy-2108422272.us-east-1.elb.amazonaws.com:8080
+            API_URL=http://EC2Con-EcsEl-oqVvui4EPqAy-2108422272.us-east-1.elb.amazonaws.com:8080
             DOCKERHUB_TOKEN=${{ secrets.DOCKERHUB_TOKEN }}
             DOCKERHUB_USERNAME=${{ secrets.DOCKERHUB_USERNAME }}
             HTPASSWD_FILE=${{ secrets.HTPASSWD_FILE }}
