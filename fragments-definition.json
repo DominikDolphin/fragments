@@ -28,7 +28,7 @@
       "environment": [
         {
           "name": "API_URL",
-          "value": "http://ec2-54-196-183-176.compute-1.amazonaws.com:8080"
+          "value": "http://ec2con-ecsel-oqvvui4epqay-2108422272.us-east-1.elb.amazonaws.com:8080"
         },
         {
           "name": "AWS_COGNITO_CLIENT_ID",
