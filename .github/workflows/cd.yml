@@ -82,6 +82,9 @@ jobs:
           ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
           ECR_REPO: fragments
           VERSION_TAG: ${{ github.ref_name }}
+          AWS_COGNITO_POOL_ID: us-east-1_0Km3c9RsG
+          AWS_COGNITO_CLIENT_ID: 6ldvoif7e2s174u74dpujte3jf
+          API_URL: http://ec2co-ecsel-1evjl2tm7osqu-438206839.us-east-1.elb.amazonaws.com:8080
         with:
           task-definition: fragments-definition.json
           container-name: fragments
