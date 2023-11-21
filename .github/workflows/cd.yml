@@ -94,9 +94,6 @@ jobs:
             LOG_LEVEL=info
             NODE_ENV=production
             API_URL=${{ secrets.API_URL }}
-            AWS_COGNITO_CLIENT_ID=${{ secrets.AWS_COGNITO_CLIENT_ID }}
-            AWS_COGNITO_POOL_ID=${{ secrets.AWS_COGNITO_POOL_ID }}
-            AWS_REGION=${{ secrets.AWS_REGION }}
             DOCKERHUB_TOKEN=${{ secrets.DOCKERHUB_TOKEN }}
             DOCKERHUB_USERNAME=${{ secrets.DOCKERHUB_USERNAME }}
             HTPASSWD_FILE=${{ secrets.HTPASSWD_FILE }}
