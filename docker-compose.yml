@@ -25,6 +25,10 @@ services:
       # something else is defined in the env.
       - AWS_S3_BUCKET_NAME=${AWS_S3_BUCKET_NAME:-fragments}
       - AWS_DYNAMODB_TABLE_NAME=${AWS_DYNAMODB_TABLE_NAME:-fragments}
+
+      - AWS_ACCESS_KEY_ID=tests
+      - AWS_SECRET_ACCESS_KEY=tests
+      - AWS_SESSION_TOKEN=tests
       
     # Ports to publish
     ports:
@@ -54,4 +58,8 @@ services:
       - SERVICES=s3
       # We're always working in us-east-1
       - DEFAULT_REGION=us-east-1
+
+      - AWS_ACCESS_KEY_ID=tests
+      - AWS_SECRET_ACCESS_KEY=tests
+      - AWS_SESSION_TOKEN=tests
 

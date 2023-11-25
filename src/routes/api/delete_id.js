@@ -7,12 +7,14 @@ const logger = require('./../../logger.js');
 module.exports = async (req, res) => {
   const fragmentID = req.params.id;
 
+  logger.info('route DELETE');
   try {
     await Fragment.delete(req.user, fragmentID);
-
+    logger.info('asdfasdfasfasdsadf');
     res.status(200).json(createSuccessResponse());
     logger.debug({ fragmentID }, `Deleted Fragment`);
   } catch (err) {
+    logger.info('big rip');
     res.setHeader('Cache-Control', 'no-cache');
     res
       .status(404)

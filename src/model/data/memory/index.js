@@ -1,5 +1,5 @@
 const MemoryDB = require('./memory-db');
-
+const { logger } = require('../../../logger');
 // Create two in-memory databases: one for fragment metadata and the other for raw data
 const data = new MemoryDB();
 const metadata = new MemoryDB();
@@ -47,7 +47,7 @@ function deleteFragment(ownerId, id) {
   ]);
 }
 
-module.exports = require('./memory-db');
+//module.exports = require('./memory-db');
 module.exports.listFragments = listFragments;
 module.exports.writeFragment = writeFragment;
 module.exports.readFragment = readFragment;
