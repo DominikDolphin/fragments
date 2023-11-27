@@ -28,15 +28,15 @@
       "environment": [
         {
           "name": "API_URL",
-          "value": "http://localhost:8080"
+          "value": "http://ec2con-ecsel-oqvvui4epqay-2108422272.us-east-1.elb.amazonaws.com:8080"
         },
         {
           "name": "AWS_COGNITO_CLIENT_ID",
-          "value": "NOTE: Add on GitHub Encryped Secrets"
+          "value": "13tmkko8n2si1l51ukk5l2m9ru"
         },
         {
           "name": "AWS_COGNITO_POOL_ID",
-          "value": "NOTE: Add on GitHub Encryped Secrets"
+          "value": "us-east-1_IDLTN0OWG"
         },
         {
           "name": "HTPASSWD_FILE",
@@ -49,6 +49,18 @@
         {
           "name": "AWS_S3_BUCKET_NAME",
           "value": "dthibaudeau-fragments"
+        },
+        {
+          "name": "AWS_REGION",
+          "value": "us-east-1"
+        },
+        {
+          "name": "NODE_ENV",
+          "value": "production"
+        },
+        {
+          "name": "LOG_LEVEL",
+          "value": "info"
         }
       ],
       "resourceRequirements": null,

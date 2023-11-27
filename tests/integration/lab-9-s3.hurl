@@ -51,4 +51,3 @@ GET {{url}}
 user3@email.com:password3
 
 HTTP/1.1 404
-

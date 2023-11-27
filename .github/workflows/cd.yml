@@ -66,6 +66,7 @@ jobs:
           VERSION_TAG: ${{ github.ref_name }}
         uses: docker/build-push-action@v4
         with:
+          context: .
           push: true
           # Use the git tag version and `latest`
           tags: ${{ env.ECR_REGISTRY }}/${{ env.ECR_REPO }}:${{ env.VERSION_TAG }}, ${{ env.ECR_REGISTRY }}/${{ env.ECR_REPO }}:latest
@@ -81,6 +82,9 @@ jobs:
           ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
           ECR_REPO: fragments
           VERSION_TAG: ${{ github.ref_name }}
+          AWS_COGNITO_POOL_ID: us-east-1_0Km3c9RsG
+          AWS_COGNITO_CLIENT_ID: 6ldvoif7e2s174u74dpujte3jf
+          API_URL: http://EC2Con-EcsEl-oqVvui4EPqAy-2108422272.us-east-1.elb.amazonaws.com:8080
         with:
           task-definition: fragments-definition.json
           container-name: fragments
