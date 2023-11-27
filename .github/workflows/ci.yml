@@ -15,7 +15,8 @@ on:
       - main
       - Assignment2
       - ECS-implementation
-      - lab9
+      - lab9V2
+
 
 jobs:
   lint:

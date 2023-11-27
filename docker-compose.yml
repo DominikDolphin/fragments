@@ -29,6 +29,7 @@ services:
       - AWS_ACCESS_KEY_ID=tests
       - AWS_SECRET_ACCESS_KEY=tests
       - AWS_SESSION_TOKEN=tests
+
     # Ports to publish
     ports:
       - '8080:8080'

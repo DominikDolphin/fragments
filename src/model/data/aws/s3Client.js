@@ -1,3 +1,5 @@
+// src/model/data/aws/s3Client.js
+
 /**
  * S3 specific config and objects.  See:
  * https://www.npmjs.com/package/@aws-sdk/client-s3

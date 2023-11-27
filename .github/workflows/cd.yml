@@ -96,14 +96,13 @@ jobs:
           environment-variables: |
             LOG_LEVEL=info
             NODE_ENV=production
-            API_URL=http://EC2Con-EcsEl-oqVvui4EPqAy-2108422272.us-east-1.elb.amazonaws.com:8080
+            API_URL=${{ secrets.API_URL }}
+            AWS_COGNITO_CLIENT_ID=${{ secrets.AWS_COGNITO_CLIENT_ID }}
+            AWS_COGNITO_POOL_ID=${{ secrets.AWS_COGNITO_POOL_ID }}
+            AWS_REGION=${{ secrets.AWS_REGION }}
             DOCKERHUB_TOKEN=${{ secrets.DOCKERHUB_TOKEN }}
             DOCKERHUB_USERNAME=${{ secrets.DOCKERHUB_USERNAME }}
             HTPASSWD_FILE=${{ secrets.HTPASSWD_FILE }}
-            AWS_REGION=us-east-1
-            PORT=8080
-            AWS_COGNITO_CLIENT_ID=13tmkko8n2si1l51ukk5l2m9ru
-            AWS_COGNITO_POOL_ID=us-east-1_IDLTN0OWG
             AWS_S3_BUCKET_NAME=dthibaudeau-fragments
 
       - name: Deploy Amazon ECS task definition

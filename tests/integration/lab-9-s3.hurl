@@ -1,3 +1,4 @@
+# tests/integration/post-fragments.hurl
 # Authenticated POST to /v1/fragments
 POST http://localhost:8080/v1/fragments
 # We're sending a plain text fragment
@@ -10,7 +11,7 @@ user3@email.com:password3
 
 # 1. We expect to get back an HTTP 201
 HTTP/1.1 201
-# We have various assertions about the response that we want to check
+
 [Asserts]
 # The Location header should look like what we expect (including the fragment id)
 header "Content-Location" matches "^http:\/\/localhost:8080\/v1\/fragments\/[A-Za-z0-9_-]+$"
@@ -24,8 +25,6 @@ jsonpath "$.fragment.ownerId" matches "^[0-9a-fA-F]+$"
 jsonpath "$.fragment.created" isString
 jsonpath "$.fragment.updated" isString
 jsonpath "$.fragment.type" == "text/plain"
-
-# Capture the Location URL into a variable named `url`
 [Captures]
 url: header "Content-Location"
 
@@ -39,14 +38,14 @@ Content-Type: text/plain
 [Asserts]
 body == "Hello S3!"
 
-# 3. Delete the fragment
 DELETE {{url}}
 [BasicAuth]
 user3@email.com:password3
 
+# 1. We expect to get back an HTTP 201
 HTTP/1.1 200
 
-#Get the deleted fragment by id.
+# 2. Try to GET the fragment we just posted by its URL
 GET {{url}}
 [BasicAuth]
 user3@email.com:password3

@@ -1,10 +1,11 @@
 // XXX: temporary use of memory-db until we add DynamoDB
 const MemoryDB = require('../memory/memory-db');
 const s3Client = require('./s3Client');
-const { PutObjectCommand, GetObjectCommand, DeleteObjectCommand } = require('@aws-sdk/client-s3');
-const logger = require('../../../logger');
+const { PutObjectCommand, DeleteObjectCommand, GetObjectCommand } = require('@aws-sdk/client-s3');
+const { logger } = require('../../../logger');
 
 // Create two in-memory databases: one for fragment metadata and the other for raw data
+// const data = new MemoryDB();
 const metadata = new MemoryDB();
 
 // Write a fragment's metadata to memory db. Returns a Promise
@@ -101,8 +102,10 @@ async function listFragments(ownerId, expand = false) {
   return fragments.map((fragment) => fragment.id);
 }
 
-// Delete a fragment's metadata and data from memory db. Returns a Promise
+// Writes a fragment's data to an S3 Object in a Bucket
+// https://github.com/awsdocs/aws-sdk-for-javascript-v3/blob/main/doc_source/s3-example-creating-buckets.md#upload-an-existing-object-to-an-amazon-s3-bucket
 async function deleteFragment(ownerId, id) {
+  // logger.info('WE ARE INSIDE THE DELETE FRAGMENT FUNCTION');
   // Create the PUT API params from our details
   const params = {
     Bucket: process.env.AWS_S3_BUCKET_NAME,
@@ -110,22 +113,21 @@ async function deleteFragment(ownerId, id) {
     Key: `${ownerId}/${id}`,
   };
 
-  // Create a GET Object command to send to S3
+  // Create a PUT Object command to send to S3
   const command = new DeleteObjectCommand(params);
 
   try {
-    // Get the object from the Amazon S3 bucket. It is returned as a ReadableStream.
-    const data = await s3Client.send(command);
-    // Convert the ReadableStream to a Buffer
-    return streamToBuffer(data.Body);
+    // Use our client to send the command
+    await s3Client.send(command);
   } catch (err) {
+    // If anything goes wrong, log enough info that we can debug
     const { Bucket, Key } = params;
-    logger.error({ err, Bucket, Key }, 'Error deleting fragment from S3');
-    throw new Error('unable to delete fragment');
+    logger.error({ err, Bucket, Key }, 'Error uploading fragment data to S3');
+    throw new Error('unable to upload fragment data');
   }
 }
 
-module.exports = require('./memory-db');
+// module.exports = require('./memory-db');
 module.exports.listFragments = listFragments;
 module.exports.writeFragment = writeFragment;
 module.exports.readFragment = readFragment;
