@@ -1,3 +1,5 @@
+# docker-compose.yml
+
 services:
   # Fragments microservice API server
   fragments:
@@ -13,7 +15,11 @@ services:
       # Use Basic Auth (for running tests, CI)
       - HTPASSWD_FILE=tests/.htpasswd
       # Use the LOG_LEVEL set in the host environment, or default to info
-      - LOG_LEVEL=${LOG_LEVEL:-info}
+      - LOG_LEVEL=${LOG_LEVEL:-debug}
+      # AWS FAKE CREDENTIALS
+      - AWS_ACCESS_KEY_ID=test
+      - AWS_SECRET_ACCESS_KEY=test
+      - AWS_SESSION_TOKEN=test
       - AWS_REGION=us-east-1
       # Use the LocalStack endpoint vs. AWS for S3 AWS SDK clients.
       # NOTE: we use Docker's internal network to the localstack container
@@ -25,15 +31,9 @@ services:
       # something else is defined in the env.
       - AWS_S3_BUCKET_NAME=${AWS_S3_BUCKET_NAME:-fragments}
       - AWS_DYNAMODB_TABLE_NAME=${AWS_DYNAMODB_TABLE_NAME:-fragments}
-
-      - AWS_ACCESS_KEY_ID=tests
-      - AWS_SECRET_ACCESS_KEY=tests
-      - AWS_SESSION_TOKEN=tests
-
     # Ports to publish
     ports:
       - '8080:8080'
-
   # DynamoDB Local, see: https://hub.docker.com/r/amazon/dynamodb-local
   dynamodb-local:
     image: amazon/dynamodb-local
@@ -43,8 +43,7 @@ services:
     # Run the database in memory, see:
     # https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/DynamoDBLocal.UsageNotes.html
     command: ['-jar', 'DynamoDBLocal.jar', '-inMemory']
-
-    # LocalStack for S3, see https://docs.localstack.cloud/get-started/#docker-compose
+  # LocalStack for S3, see https://docs.localstack.cloud/get-started/#docker-compose
   # Interact via awscli-local, see https://docs.localstack.cloud/integrations/aws-cli/#installation
   localstack:
     # https://hub.docker.com/r/localstack/localstack
@@ -58,7 +57,8 @@ services:
       - SERVICES=s3
       # We're always working in us-east-1
       - DEFAULT_REGION=us-east-1
-
-      - AWS_ACCESS_KEY_ID=tests
-      - AWS_SECRET_ACCESS_KEY=tests
-      - AWS_SESSION_TOKEN=tests
+      # AWS FAKE CREDENTIALS
+      - AWS_ACCESS_KEY_ID=test
+      - AWS_SECRET_ACCESS_KEY=test
+      - AWS_SESSION_TOKEN=test
+      - AWS_REGION=us-east-1

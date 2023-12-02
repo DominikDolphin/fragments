@@ -7,7 +7,8 @@ const logger = require('./../../logger.js');
  */
 module.exports = async (req, res) => {
   const fragmentID = req.params.id;
-
+  logger.debug('WWE ARE IONSIDE GET_ID');
+  logger.debug('params are: ' + req.params.id);
   try {
     let foundFragment = await Fragment.byId(req.user, fragmentID);
 
@@ -21,7 +22,7 @@ module.exports = async (req, res) => {
     res.write(data.toString());
     res.end();
 
-    logger.debug({ foundFragment }, `Got fragment from id ${fragmentID}`);
+   logger.debug({ foundFragment }, `Got fragment from id ${fragmentID}`);
   } catch (err) {
     res.setHeader('Cache-Control', 'no-cache');
     res
@@ -29,7 +30,5 @@ module.exports = async (req, res) => {
       .json(
         createErrorResponse(404, `The requested fragment id does not exist. ID: ${fragmentID}`)
       );
-
-    logger.debug({ fragmentID }, `No fragment found for id`);
   }
 };

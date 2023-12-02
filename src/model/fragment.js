@@ -61,16 +61,79 @@ class Fragment {
    * @returns Promise<Fragment>
    */
   static async byId(ownerId, id) {
+    let frag = await readFragment(ownerId, id);
+    if (!frag) {
+      logger.error('Fragment does not exist!');
+      throw new Error('Fragment does not exist');
+    }
+
+    if (!(frag instanceof Fragment)) {
+      let fragInstance = new Fragment({
+        id: frag.id,
+        ownerId: frag.ownerId,
+        type: frag.type,
+        size: frag.size,
+        created: frag.created,
+        updated: frag.updated,
+      });
+
+      return fragInstance;
+    }
+
+    return frag;
+  }
+  /*
+  
+  static async byId(ownerId, id) {
+    let frag = null;
+    try {
+      frag = await readFragment(ownerId, id);
+    } catch (error) {
+      throw new Error(`Error with readFragment inside of byId: ${error}`);
+    }
+
+    if (!frag) {
+      logger.error('Fragment does not exist!');
+      throw new Error('Fragment does not exist');
+    }
+
+    if (!(frag instanceof Fragment)) {
+      let fragInstance = new Fragment({
+        id: frag.id,
+        ownerId: frag.ownerId,
+        type: frag.type,
+        size: frag.size,
+        created: frag.created,
+        updated: frag.updated,
+      });
+
+      return fragInstance;
+    }
+
+    return frag;
+  }
+  */
+  /*static async byId(ownerId, id) {
     try {
       let frag = await readFragment(ownerId, id);
       if (!frag) {
         throw new Error('Could not find fragment');
       }
+
+      if (!(frag instanceof Fragment)) {
+        let fragInstance = new Fragment({
+          id: frag.id,
+          ownerId: frag.ownerId,
+          type: frag.type,
+          size: frag.size
+        });
+        return fragInstance;
+      }
       return frag;
     } catch (error) {
       throw new Error(`Error getting id: ${error}`);
     }
-  }
+  }*/
 
   /**
    * Delete the user's fragment data and metadata for the given id
@@ -111,7 +174,19 @@ class Fragment {
 
     this.size = data.length;
     this.updated = new Date().toISOString();
-    return writeFragmentData(this.ownerId, this.id, data);
+
+    try {
+      return await writeFragmentData(this.ownerId, this.id, data);
+    } catch (error) {
+      if (error.name === 'ResourceNotFoundException') {
+        console.error(
+          'The requested resource could not be found. Please check if the resource exists and if you have the necessary permissions to access it.'
+        );
+        // handle error
+      } else {
+        throw error;
+      }
+    }
   }
 
   /**
