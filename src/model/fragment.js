@@ -61,15 +61,25 @@ class Fragment {
    * @returns Promise<Fragment>
    */
   static async byId(ownerId, id) {
-    try {
-      let frag = await readFragment(ownerId, id);
-      if (!frag) {
-        throw new Error('Could not find fragment');
-      }
-      return frag;
-    } catch (error) {
-      throw new Error(`Error getting id: ${error}`);
+    let frag = await readFragment(ownerId, id);
+    if (!frag) {
+      throw new Error('Fragment does not exist');
     }
+
+    if (!(frag instanceof Fragment)) {
+      let fragInstance = new Fragment({
+        id: frag.id,
+        ownerId: frag.ownerId,
+        type: frag.type,
+        size: frag.size,
+        created: frag.created,
+        updated: frag.updated,
+      });
+
+      return fragInstance;
+    }
+
+    return frag;
   }
 
   /**
@@ -111,7 +121,19 @@ class Fragment {
 
     this.size = data.length;
     this.updated = new Date().toISOString();
-    return writeFragmentData(this.ownerId, this.id, data);
+
+    try {
+      return await writeFragmentData(this.ownerId, this.id, data);
+    } catch (error) {
+      if (error.name === 'ResourceNotFoundException') {
+        console.error(
+          'The requested resource could not be found. Please check if the resource exists and if you have the necessary permissions to access it.'
+        );
+        // handle error
+      } else {
+        throw error;
+      }
+    }
   }
 
   /**
