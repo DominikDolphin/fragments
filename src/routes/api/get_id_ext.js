@@ -1,6 +1,7 @@
 const { Fragment } = require('../../model/fragment.js');
 const logger = require('../../logger.js');
 var md = require('markdown-it')();
+const sharp = require('sharp');
 // var result = md.render('# markdown-it rulezz!');
 
 module.exports = async (req, res) => {
@@ -19,6 +20,12 @@ module.exports = async (req, res) => {
         break;
       case 'html':
         extensionToConvertTo = 'text/html';
+        break;
+      case 'png':
+        extensionToConvertTo = 'image/png';
+        break;
+      case 'jpg':
+        extensionToConvertTo = 'image/jpeg';
         break;
     }
 
@@ -39,6 +46,16 @@ module.exports = async (req, res) => {
     switch (extensionToConvertTo) {
       case 'text/html':
         convertedData = md.render(data.toString(), {});
+        break;
+      case 'image/png':
+        // use sharp to convert to png
+        try {
+          convertedData = await sharp(data).png().toBuffer();
+        } catch (err) {
+          logger.error(err);
+          throw new Error(`Error converting to png`);
+        }
+
         break;
       default:
         convertedData = data.toString();

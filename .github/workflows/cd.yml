@@ -104,6 +104,7 @@ jobs:
             DOCKERHUB_USERNAME=${{ secrets.DOCKERHUB_USERNAME }}
             HTPASSWD_FILE=${{ secrets.HTPASSWD_FILE }}
             AWS_S3_BUCKET_NAME=dthibaudeau-fragments
+            AWS_DYNAMODB_TABLE_NAME=fragments
 
       - name: Deploy Amazon ECS task definition
         uses: aws-actions/amazon-ecs-deploy-task-definition@v1

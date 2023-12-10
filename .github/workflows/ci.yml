@@ -17,6 +17,7 @@ on:
       - ECS-implementation
       - lab9V2
       - lab10_implementation
+      - a3
 
 jobs:
   lint:
