@@ -19,10 +19,14 @@ module.exports = async (req, res) => {
       'Content-Type': foundFragment.type,
       'Content-Length': foundFragment.size,
     });
-    res.write(data.toString());
+    if (foundFragment.type.startsWith('image')) {
+      res.write(data);
+    } else {
+      res.write(data.toString());
+    }
     res.end();
 
-   logger.debug({ foundFragment }, `Got fragment from id ${fragmentID}`);
+    logger.debug({ foundFragment }, `Got fragment from id ${fragmentID}`);
   } catch (err) {
     res.setHeader('Cache-Control', 'no-cache');
     res
