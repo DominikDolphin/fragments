@@ -59,7 +59,7 @@ module.exports = async (req, res) => {
       case 'image/png':
         // use sharp to convert to png
         try {
-          convertedData = await sharp(data.toString()).png().toBuffer();
+          convertedData = await sharp(data).toFormat('png').png().toBuffer();
         } catch (err) {
           logger.error(err);
           throw new Error(`Error converting to png`);
