@@ -45,8 +45,14 @@ module.exports = async (req, res) => {
       );
     }
 
+    let data;
     // Get the data from the fragment.
-    let data = await foundFragment.getData();
+    try {
+      data = await foundFragment.getData();
+    } catch (err) {
+      logger.error(err);
+      throw new Error(`Error getting data from fragment`);
+    }
 
     // Data that will be returned to the client.
     let convertedData;
@@ -59,6 +65,8 @@ module.exports = async (req, res) => {
       case 'image/png':
         // use sharp to convert to png
         try {
+          console.log('poop');
+          console.log(data);
           convertedData = await sharp(data).toFormat('png').toBuffer();
         } catch (err) {
           logger.error(err);
@@ -79,12 +87,12 @@ module.exports = async (req, res) => {
 
       case 'image/gif':
         // use sharp to convert to gif
-        // try {
-        //   convertedData = await sharp(data).gif().toBuffer();
-        // } catch (err) {
-        //   logger.error(err);
-        //   throw new Error(`Error converting to gif`);
-        // }
+        try {
+          convertedData = await sharp(data).toFormat('gif').toBuffer();
+        } catch (err) {
+          logger.error(err);
+          throw new Error(`Error converting to gif`);
+        }
         break;
       default:
         convertedData = data.toString();

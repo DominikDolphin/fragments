@@ -1,5 +1,7 @@
 const request = require('supertest');
 const app = require('../../src/app');
+const path = require('path');
+const fs = require('fs');
 
 describe('GET /v1/fragments/:id.:ext', () => {
   test('Can covert md to html', async () => {
@@ -110,8 +112,27 @@ describe('GET /v1/fragments/:id.:ext', () => {
       .get(`/v1/fragments/${fragmentID}.txt`)
       .auth('user1@email.com', 'password1');
 
-      console.log(res2);
     expect(res2.statusCode).toBe(200);
     expect(res2.body).toBe('Hello World');
+  });
+
+  test('Converting gif to png', async () => {
+    const image = path.join(__dirname, '../images/space.gif');
+    const imageBuffer = fs.readFileSync(image);
+
+    const res1 = await request(app)
+      .post('/v1/fragments')
+      .auth('user1@email.com', 'password1')
+      .set('Content-type', 'image/gif')
+      .send(imageBuffer);
+
+    const fragmentID = res1.body.fragment.id;
+
+    // API request for GET id
+    const res2 = await request(app)
+      .get(`/v1/fragments/${fragmentID}.png`)
+      .auth('user1@email.com', 'password1');
+
+    expect(res2.statusCode).toBe(200);
   });
 });
