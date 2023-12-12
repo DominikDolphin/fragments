@@ -2,6 +2,9 @@ const { Fragment } = require('../../model/fragment.js');
 const logger = require('../../logger.js');
 var md = require('markdown-it')();
 const sharp = require('sharp');
+const removeMarkdown = require('remove-markdown');
+
+// const removeMarkdown = require('markdown-to-text');
 // var result = md.render('# markdown-it rulezz!');
 
 module.exports = async (req, res) => {
@@ -20,6 +23,9 @@ module.exports = async (req, res) => {
         break;
       case 'html':
         extensionToConvertTo = 'text/html';
+        break;
+      case 'txt':
+        extensionToConvertTo = 'text/plain';
         break;
       case 'png':
         extensionToConvertTo = 'image/png';
@@ -54,6 +60,14 @@ module.exports = async (req, res) => {
         } catch (err) {
           logger.error(err);
           throw new Error(`Error converting to png`);
+        }
+        break;
+
+      case 'text/plain':
+        if (foundFragment.type == 'text/markdown') {
+          convertedData = removeMarkdown(data.toString());
+        } else {
+          convertedData = data.toString();
         }
 
         break;
