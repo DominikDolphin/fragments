@@ -74,7 +74,7 @@ describe('API Responses', () => {
     .auth('user1@email.com', 'password1')
     .send('goodbye world');
 
-    expect(res.statusCode).toBe(201);
-    expect(res.body.status).toBe('ok');
+    expect(updateRes.statusCode).toBe(200);
+    expect(updateRes.body.status).toBe('ok');
   });
 });
