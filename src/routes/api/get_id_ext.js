@@ -34,6 +34,8 @@ module.exports = async (req, res) => {
       case 'jpg':
         extensionToConvertTo = 'image/jpeg';
         break;
+      case 'gif':
+        extensionToConvertTo = 'image/gif';
     }
 
     // If the fragment's format is not compatible with the requested format, return 415.
@@ -57,7 +59,7 @@ module.exports = async (req, res) => {
       case 'image/png':
         // use sharp to convert to png
         try {
-          convertedData = await sharp(data).png().toBuffer();
+          convertedData = await sharp(data.toString()).png().toBuffer();
         } catch (err) {
           logger.error(err);
           throw new Error(`Error converting to png`);
@@ -73,6 +75,16 @@ module.exports = async (req, res) => {
           convertedData = data.toString();
         }
 
+        break;
+
+      case 'image/gif':
+        // use sharp to convert to gif
+        // try {
+        //   convertedData = await sharp(data).gif().toBuffer();
+        // } catch (err) {
+        //   logger.error(err);
+        //   throw new Error(`Error converting to gif`);
+        // }
         break;
       default:
         convertedData = data.toString();
