@@ -3,6 +3,7 @@ const logger = require('../../logger.js');
 var md = require('markdown-it')();
 const sharp = require('sharp');
 const removeMarkdown = require('remove-markdown');
+const { convert } = require('html-to-text');
 
 // const removeMarkdown = require('markdown-to-text');
 // var result = md.render('# markdown-it rulezz!');
@@ -66,6 +67,8 @@ module.exports = async (req, res) => {
       case 'text/plain':
         if (foundFragment.type == 'text/markdown') {
           convertedData = removeMarkdown(data.toString());
+        } else if (foundFragment.type == 'text/html') {
+          convertedData = convert(data.toString(), { wordwrap: 130 });
         } else {
           convertedData = data.toString();
         }
