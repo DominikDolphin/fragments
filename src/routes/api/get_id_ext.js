@@ -1,7 +1,7 @@
 const { Fragment } = require('../../model/fragment.js');
 const logger = require('../../logger.js');
 var md = require('markdown-it')();
-const sharp = require('sharp');
+// const sharp = require('sharp');
 // var result = md.render('# markdown-it rulezz!');
 
 module.exports = async (req, res) => {
