@@ -116,7 +116,7 @@ describe('GET /v1/fragments/:id.:ext', () => {
     expect(res2.body).toBe('Hello World');
   });
 
-  test('Converting gif to png', async () => {
+  test('Authenticated user can convert to png (tested from gif)', async () => {
     const image = path.join(__dirname, '../images/space.gif');
     const imageBuffer = fs.readFileSync(image);
 
@@ -135,4 +135,45 @@ describe('GET /v1/fragments/:id.:ext', () => {
 
     expect(res2.statusCode).toBe(200);
   });
+
+  test('Authenticated user can convert to gif (tested from png)', async () => {
+    const image = path.join(__dirname, '../images/panda.png');
+    const imageBuffer = fs.readFileSync(image);
+
+    const res1 = await request(app)
+      .post('/v1/fragments')
+      .auth('user1@email.com', 'password1')
+      .set('Content-type', 'image/png')
+      .send(imageBuffer);
+
+    const fragmentID = res1.body.fragment.id;
+
+    // API request for GET id
+    const res2 = await request(app)
+      .get(`/v1/fragments/${fragmentID}.gif`)
+      .auth('user1@email.com', 'password1');
+
+    expect(res2.statusCode).toBe(200);
+  });
+
+  test('Authenticated user can convert to jepg (tested from gif)', async () => {
+    const image = path.join(__dirname, '../images/space.gif');
+    const imageBuffer = fs.readFileSync(image);
+
+    const res1 = await request(app)
+      .post('/v1/fragments')
+      .auth('user1@email.com', 'password1')
+      .set('Content-type', 'image/gif')
+      .send(imageBuffer);
+
+    const fragmentID = res1.body.fragment.id;
+
+    // API request for GET id
+    const res2 = await request(app)
+      .get(`/v1/fragments/${fragmentID}.jpg`)
+      .auth('user1@email.com', 'password1');
+
+    expect(res2.statusCode).toBe(200);
+  });
+
 });

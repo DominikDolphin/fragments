@@ -188,11 +188,8 @@ class Fragment {
       case 'application/json':
         return ['application/json', 'text/plain'];
       case 'image/png':
-        return ['image/png', 'image/jpeg', 'image/webp', 'image/gif'];
       case 'image/jpeg':
-        return ['image/png', 'image/jpeg', 'image/webp', 'image/gif'];
       case 'image/webp':
-        return ['image/png', 'image/jpeg', 'image/webp', 'image/gif'];
       case 'image/gif':
         return ['image/png', 'image/jpeg', 'image/webp', 'image/gif'];
       default:

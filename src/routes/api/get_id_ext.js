@@ -65,12 +65,20 @@ module.exports = async (req, res) => {
       case 'image/png':
         // use sharp to convert to png
         try {
-          console.log('poop');
-          console.log(data);
           convertedData = await sharp(data).toFormat('png').toBuffer();
         } catch (err) {
           logger.error(err);
           throw new Error(`Error converting to png`);
+        }
+        break;
+
+      case 'image/jpg':
+        // use sharp to convert to png
+        try {
+          convertedData = await sharp(data).toFormat('jpg').toBuffer();
+        } catch (err) {
+          logger.error(err);
+          throw new Error(`Error converting to jpg`);
         }
         break;
 
